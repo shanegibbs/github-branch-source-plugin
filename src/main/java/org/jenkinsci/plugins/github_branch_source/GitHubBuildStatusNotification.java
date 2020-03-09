@@ -70,6 +70,13 @@ public class GitHubBuildStatusNotification {
     private static final Logger LOGGER = Logger.getLogger(GitHubBuildStatusNotification.class.getName());
 
     private static void createBuildCommitStatus(Run<?, ?> build, TaskListener listener) {
+        // we want all notifications disabled
+        final boolean disabled = true;
+        if (disabled) {
+            LOGGER.log(Level.WARNING, "Not creating build commit status - sgibbs");
+            return;
+        }
+
         SCMSource src = SCMSource.SourceByItem.findSource(build.getParent());
         SCMRevision revision = src != null ? SCMRevisionAction.getRevision(src, build) : null;
         if (revision != null) { // only notify if we have a revision to notify
